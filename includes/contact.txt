@@ -1,0 +1,3 @@
+Address = "60-49 Road 11378 New York";
+Phone = "+65 11.188.888";
+Email = "garima.chaphekar@sjsu.edu";
