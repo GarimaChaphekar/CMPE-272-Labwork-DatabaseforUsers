@@ -1,7 +1,8 @@
-<?php
+	<?php
 session_start();
 include("includes/db.php");
 include("functions/functions.php");
+
 
 ?>
 
@@ -280,103 +281,76 @@ include("functions/functions.php");
 	</div>
 	<!--advantage End-->
 
+	
+
+
 	<div id="hot">
 		<!--hot Start-->
 		<div class="box">
 			<div class="container">
 				<div class="col-md-12">
-					<h2>Featured & Trending Products</h2>
+					<h2>Most Visited Produts</h2>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!--hot End-->
+
 	<div id="content" class="container">
-		<div class="row">
-			<div class="col-sm-4 col-sm-6 single">
-				<div class="product">
-					<a href="#">
-						<img src="admin_area/product_images/122.jpg" class="img-responsive">
-					</a>
-					<div class="text">
-						<h3><a href="#">Polka Dot Skirt</a></h3>
-						<p class="price">$ 20</p>
-						<p class="button">
-							<a href="#" class="btn btn-default">View Details</a>
-							<a href="#" class="btn btn-primary">
-								<i class="fa fa-shopping-cart"></i> Add to Cart
-							</a>
-						</p>
-					</div>
-
+	<div class="row">
+	<?php
+	if(isset($_COOKIE['most_visited'])) {
+		$previously_visited_cookie = $_COOKIE['most_visited'];
+		
+		$previously_visited = unserialize($previously_visited_cookie);
+		arsort($previously_visited);
+		//print_r($previously_visited);
+		//print_r(arsort($previously_visited));
+		//$mvp5 = array_slice($previously_visited, 0, 3);
+		//print_r($mvp5);
+		$i=0;
+		foreach ($previously_visited as $element => $value) {
+			
+			if($i<5){
+				$i++;
+				$pro_id = $element;
+				$get_product="select * from products where product_id='$pro_id' ";
+				$run_product=mysqli_query($con,$get_product);
+				while ($row=mysqli_fetch_array($run_product)) {
+					
+				$pro_id=$row['product_id'];
+				$product_title=$row['product_title'];
+				$product_price=$row['product_price'];
+				$product_img1=$row['product_img1'];
+				echo "
+				<div class='col-sm-4 col-sm-6 single'>
+				<div class='product same-height'>
+				<a href='details.php?pro_id=$pro_id'>
+				<img src='admin_area/product_images/$product_img1' class='img-responsive'>
+				</a>
+				<div class='text'>
+				<h3><a href='details.php?pro_id=$pro_id'>$product_title</a></h3>
+				<p class='price'>$product_price</p>
+				<p class='button'>
+					<a href = 'details.php?pro_id=$pro_id' class ='btn btn-default'>View Details</a>
+					<a href = '#' class ='btn btn-primary'><i class='fa fa-shopping-cart'></i> Add to Cart</a>
+				</p>
 				</div>
-
-
-			</div>
-			<div class="col-sm-4 col-sm-6 single">
-				<div class="product">
-					<a href="#">
-						<img src="admin_area/product_images/121.jpg" class="img-responsive">
-					</a>
-					<div class="text">
-						<h3><a href="#">Rose Bold Sweater</a></h3>
-						<p class="price"> $ 60</p>
-						<p class="button">
-							<a href="#" class="btn btn-default">View Details</a>
-							<a href="#" class="btn btn-primary">
-								<i class="fa fa-shopping-cart"></i> Add to Cart
-							</a>
-						</p>
-					</div>
-
 				</div>
+				</div>			";
+							
+			}
+			}		
+		  
 
+	}
+		echo "</table>";
+		echo "</div>";
+		echo "<br>";
+} 
 
-			</div>
-			<div class="col-sm-4 col-sm-6 single">
-				<div class="product">
-					<a href="#">
-						<img src="admin_area/product_images/5393319800_2_2_1-1024x1308.jpg" class="img-responsive">
-					</a>
-					<div class="text">
-						<h3><a href="#">Summer Floret Dress</a></h3>
-						<p class="price">$ 35</p>
-						<p class="button">
-							<a href="#" class="btn btn-default">View Details</a>
-							<a href="#" class="btn btn-primary">
-								<i class="fa fa-shopping-cart"></i> Add to Cart
-							</a>
-						</p>
-					</div>
-
-				</div>
-
-
-			</div>
-			<div class="col-sm-4 col-sm-6 single">
-				<div class="product">
-					<a href="#">
-						<img src="admin_area/product_images/9393313800_2_2_1-1024x1308.jpg" class="img-responsive">
-					</a>
-					<div class="text">
-						<h3><a href="#">Black Skater Dress</a></h3>
-						<p class="price"> $ 35</p>
-						<p class="button">
-							<a href="#" class="btn btn-default">View Details</a>
-							<a href="#" class="btn btn-primary">
-								<i class="fa fa-shopping-cart"></i> Add to Cart
-							</a>
-						</p>
-					</div>
-
-				</div>
-
-
-			</div>
-		</div>
+	?>
 	</div>
-
-
+	</div>
 <!--Footer Start-->
 <?php 
 include("includes/footer.php");
