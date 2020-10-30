@@ -54,24 +54,6 @@ if(isset($_COOKIE['previously_visited'])) {
   
   setcookie('previously_visited', $previously_visited_cookie, $expire, '/');
   
-    if(isset($_COOKIE['LastFive']))
-    { 
-        
-        $data = json_decode($_COOKIE['LastFive'], true);
-        $data[] = $current;
-        $id_list = array_unique($data);
-        if(count($id_list)>5)
-        {
-            array_shift($id_list);
-        }
-        setcookie('LastFive',json_encode($id_list), $expire,'/'); 
-    } 
-    else
-    {
-        
-        $id_list[] = $current;
-        setcookie('LastFive',json_encode($id_list),$expire,'/'); 
-    }
       
   
   
